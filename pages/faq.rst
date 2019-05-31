@@ -233,7 +233,7 @@ This setting can be `dynamically updated <https://www.elastic.co/guide/en/elasti
 
 My field names contain dots and stream alerts do not match anymore
 ------------------------------------------------------------------
-Due to restrictions in certain Elasticsearch versions, Graylog needs to convert field names that contain ``.`` characters with another character, by default the replacement character is ``_``.
+Due to restrictions in certain Elasticsearch versions, in Graylog versions < 3.1.0 Graylog needs to convert field names that contain ``.`` characters with another character, by default the replacement character is ``_``.
 
 This replacement is done just prior to writing messages to Elasticsearch, which causes a mismatch between what stream rules and alert conditions see as field names when they are evaluated.
 
@@ -245,6 +245,8 @@ Thus alert conditions need to use the ``_`` instead of ``.`` when referring to f
 The best option, apart from not sending fields with dots, is to remember to write alert conditions using the replacement character, and never use ``.`` in the field names. In general Graylog will use the version with ``_`` in searches etc.
 
 For example, if an incoming message contains the field ``docker.container`` stream rules use that name, whereas alert conditions need to use ``docker_container``. You will notice that the search results also use the latter name.
+
+In Graylog >= 3.1.0, this conversion is no longer necessary.
 
 What does "Uncommited messages deleted from journal" mean?
 -----------------------------------------------------------
